@@ -12,3 +12,6 @@ class Aprendiz(models.Model):
     programa = models.CharField(max_length=100)
     def __str__(self):
         return f"{self.nombre} {self.apellido} {self.documento_identidad}"
+    
+    def nombre_completo(self):    
+        return f"{self.nombre} {self.apellido}"

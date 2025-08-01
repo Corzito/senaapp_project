@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - SENA APP{% endblock %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Bienvenido a SENA APP</h1>
+        <p class="hero-subtitle">Sistema de gestión integral de aprendices del Servicio Nacional de Aprendizaje</p>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-4">
+        <div class="stats-card">
+            <div class="stats-number">
+                <i class="fas fa-users text-primary"></i>
+            </div>
+            <h3 class="stats-label">
+                <a href="{% url 'aprendices:lista_aprendices' %}" class="btn btn-primary">
+                    <i class="fas fa-eye me-2"></i>Ver Aprendices
+                </a>
+            </h3>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="stats-card">
+            <div class="stats-number">
+                <i class="fas fa-chalkboard-teacher text-success"></i>
+            </div>
+            <h3 class="stats-label">
+                <a href="{% url 'instructores:lista_instructores' %}" class="btn btn-success">
+                    <i class="fas fa-eye me-2"></i>Ver Instructores
+                </a>
+            </h3>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="stats-card">
+            <div class="stats-number">
+                <i class="fas fa-book text-warning"></i>
+            </div>
+            <h3 class="stats-label">
+                <a href="{% url 'programas:lista_programas' %}" class="btn btn-warning">
+                    <i class="fas fa-eye me-2"></i>Ver Programas
+                </a>
+            </h3>
+        </div>
+    </div>
+</div>
+
+<div class="section-divider"></div>
+
+<div class="row g-4 mt-4">
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-user-graduate me-2"></i>Lista de Aprendices</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Consulta todos los aprendices registrados en el sistema.</p>
+                <a href="{% url 'aprendices:lista_aprendices' %}" class="btn btn-primary">
+                    <i class="fas fa-list me-2"></i>Ver Lista
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-chalkboard-teacher me-2"></i>Lista de Instructores</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Encuentra todos los instructores registrados en el sistema.</p>
+                <a href="{% url 'instructores:lista_instructores' %}" class="btn btn-success">
+                    <i class="fas fa-list me-2"></i>Ver Lista
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-book me-2"></i>Lista de Programas</h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Consulta todos los programas registrados en el sistema.</p>
+                <a href="{% url 'programas:lista_programas' %}" class="btn btn-warning">
+                    <i class="fas fa-list me-2"></i>Ver Lista
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>¿No hay aprendices registrados?</h5>
+            </div>
+            <div class="card-body text-center">
+                <p class="card-text mb-4">No se han registrado aprendices en el sistema.</p>
+                <a href="{% url 'admin:aprendices_aprendiz_add' %}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Registrar Primer Aprendiz
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

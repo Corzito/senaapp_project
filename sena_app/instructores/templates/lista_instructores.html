@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Instructores SENA - SENA APP{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="page-title">
+            <i class="fas fa-chalkboard-teacher me-3"></i>Lista de Instructores SENA
+        </h1>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="stats-card">
+            <div class="stats-number">{{ total_instructores }}</div>
+            <div class="stats-label">Total de Instructores</div>
+        </div>
+    </div>
+    <div class="col-md-6 d-flex align-items-center justify-content-end">
+        <a href="{% url 'admin:instructores_instructor_add' %}" class="btn btn-success">
+            <i class="fas fa-plus me-2"></i>Agregar Instructor
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="fas fa-table me-2"></i>Listado Completo de Instructores
+        </h5>
+    </div>
+    <div class="card-body p-0">
+        {% if lista_instructores %}
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-hashtag me-2"></i>Documento</th>
+                        <th><i class="fas fa-user me-2"></i>Nombre Completo</th>
+                        <th><i class="fas fa-phone me-2"></i>Teléfono</th>
+                        <th><i class="fas fa-graduation-cap me-2"></i>Fecha Nacimiento</th>
+                        <th><i class="fas fa-briefcase me-2"></i>Fecha Vinculacion</th>
+                        <th><i class="fas fa-certificate me-2"></i>Especialidad</th>
+                        <th><i class="fas fa-cogs me-2"></i>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for instructor in lista_instructores %}
+                    <tr>
+                        <td>
+                            <span class="badge bg-success">
+                                {{ instructor.documento_identidad }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-circle instructor-avatar me-3">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                </div>
+                                <div>
+                                    <strong>{{ instructor.nombre_completo }}</strong>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <i class="fas fa-phone text-muted me-2"></i>
+                            {{ instructor.telefono }}
+                        </td>
+                        <td>
+                            <i class="fas fa-birthday-cake text-muted me-2"></i>
+                            {{ instructor.fecha_nacimiento|date:"d/m/Y" }}
+                        </td>
+                        <td>
+                            <i class="fas fa-calendar-plus text-muted me-2"></i>
+                            {{ instructor.fecha_vinculacion|date:"d/m/Y" }}
+                        </td>
+                        <td>
+                            <span class="badge bg-info">
+                                {{ instructor.especialidad }}
+                            </span>
+                        </td>
+                        <td>
+                             <div class="btn-group" role="group">
+                                <a href="{% url 'admin:instructores_instructor_change' instructor.pk %}" class="btn btn-sm btn-outline-primary" title="Editar">
+                                <button type="button" class="btn btn-sm btn-outline-warning" title="Editar">
+                                <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <div class="empty-state">
+                <i class="fas fa-chalkboard-teacher fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">No hay instructores registrados</h4>
+                <p class="text-muted mb-4">No se han registrado instructores en el sistema.</p>
+                <a href="{% url 'admin:instructores_instructor_add' %}" class="btn btn-success">
+                    <i class="fas fa-plus me-2"></i>Registrar Primer Instructor
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

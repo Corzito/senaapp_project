@@ -1,317 +1,114 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Aprendices</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+{% extends 'base.html' %}
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background: #e2e8f0ff; 
-            min-height: 100vh;
-            padding: 20px;
-        }
+{% block title %}Lista de Aprendices SENA - SENA APP{% endblock %}
 
-        .header {
-            background: linear-gradient(135deg, #66eaa8ff, #62f0b5ff);
-            color: white;
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="page-title">
+            <i class="fas fa-users me-3"></i>Lista de Aprendices SENA
+        </h1>
+    </div>
+</div>
 
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .btn {
-            display: inline-block;
-            background: #7af8bdff;
-            color: white;
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: bold;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-        .btn:hover {
-            background: #65e99cff;
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: #6c757d;
-        }
-
-        .btn-secondary:hover {
-            background: #5a6268;
-        }
-
-        .search-box {
-            display: flex;
-            gap: 10px;
-        }
-
-        .search-box input {
-            padding: 12px 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            font-size: 1rem;
-            min-width: 250px;
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .aprendices-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
-        }
-
-        .aprendiz-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            border-left: 4px solid #66eaacff;
-        }
-
-        .aprendiz-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-        }
-
-        .aprendiz-avatar {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #76f1b4ff, #ffffffff);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .aprendiz-name {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        .aprendiz-info {
-            color: #666;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
-        }
-
-        .aprendiz-info span {
-            font-weight: 500;
-            min-width: 20px;
-        }
-
-        .no-aprendices {
-            text-align: center;
-            background: white;
-            padding: 60px 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-        }
-
-        .no-aprendices h3 {
-            color: #666;
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-
-        .no-aprendices p {
-            color: #888;
-            margin-bottom: 25px;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .stat {
-            text-align: center;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.08);
-            min-width: 120px;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #76ebb0ff;
-            display: block;
-        }
-
-        .stat-label {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .actions {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .search-box {
-                flex-direction: column;
-            }
-
-            .search-box input {
-                min-width: auto;
-            }
-
-            .aprendices-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stats {
-                gap: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>Lista de Aprendices</h1>
-            <p>Gestión y visualización de todos los aprendices registrados</p>
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="stats-card">
+            <div class="stats-number">{{ total_aprendices }}</div>
+            <div class="stats-label">Total de Aprendices</div>
         </div>
+    </div>
+    <div class="col-md-6 d-flex align-items-center justify-content-end">
+        <a href="{% url 'admin:aprendices_aprendiz_add' %}" class="btn btn-primary">
+            <i class="fas fa-plus me-2"></i>Agregar Aprendice
+        </a>
+    </div>
+</div>
 
-        <div class="actions">
-            <div>
-                <a href="../" class="btn btn-secondary">🏠 Volver al Inicio</a>
-            </div>
-            <div class="search-box">
-                <input type="text" placeholder="Buscar por nombre..." id="searchInput">
-                <button class="btn" onclick="buscarAprendiz()">🔍 Buscar</button>
-            </div>
-        </div>
-
-        <div class="stats">
-            <div class="stat">
-                <span class="stat-number">{{ total_aprendices }}</span>
-                <span class="stat-label">Total Aprendices</span>
-            </div>
-        </div>
-
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0">
+            <i class="fas fa-table me-2"></i>Listado Completo de Aprendices
+        </h5>
+    </div>
+    <div class="card-body p-0">
         {% if lista_aprendices %}
-            <div class="aprendices-grid">
-                {% for aprendiz in lista_aprendices %}
-                <div class="aprendiz-card">
-                    <div class="aprendiz-avatar">
-                        {{ aprendiz.nombre|first|upper }}{{ aprendiz.apellido|first|upper }}
-                    </div>
-                    <div class="aprendiz-name">{{ aprendiz.nombre }} {{ aprendiz.apellido }}</div>
-                    
-                    <div class="aprendiz-info">
-                        <span><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="20" height="20" viewBox="0 0 50 50">
-<path d="M 7 2 L 7 48 L 43 48 L 43 14.59375 L 42.71875 14.28125 L 30.71875 2.28125 L 30.40625 2 Z M 9 4 L 29 4 L 29 16 L 41 16 L 41 46 L 9 46 Z M 31 5.4375 L 39.5625 14 L 31 14 Z M 15 22 L 15 24 L 35 24 L 35 22 Z M 15 28 L 15 30 L 31 30 L 31 28 Z M 15 34 L 15 36 L 35 36 L 35 34 Z"></path>
-</svg></span> {{ aprendiz.documento_identidad }}
-                    </div>
-                    
-                    <div class="aprendiz-info">
-                        <span>📱</span> {{ aprendiz.telefono }}
-                    </div>
-                    
-                    <div class="aprendiz-info">
-                        <span>📧</span> {{ aprendiz.correo }}
-                    </div>
-                    
-                    <div class="aprendiz-info">
-                        <span>🎂</span> {{ aprendiz.fecha_nacimiento|date:"d/m/Y" }}
-                    </div>
-                    
-                    <div class="aprendiz-info">
-                        <span>🏙️</span> {{ aprendiz.ciudad }}
-                    </div>
-                    
-                    <div class="aprendiz-info">
-                        <span>🎓</span> {{ aprendiz.programa }}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-hashtag me-2"></i>Documento</th>
+                        <th><i class="fas fa-user me-2"></i>Nombre Completo</th>
+                        <th><i class="fas fa-calendar me-2"></i>Fecha de Nacimiento</th>
+                        <th><i class="fas fa-map-marker-alt me-2"></i>Programa</th>
+                        <th><i class="fas fa-graduation-cap me-2"></i>Estado</th>
+                        <th><i class="fas fa-cogs me-2"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for aprendiz in lista_aprendices %}
+                    <tr>
+                        <td>
+                            <span class="badge bg-primary">
+                                {{ aprendiz.documento_identidad }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="avatar-circle me-3">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <strong>{{ aprendiz.nombre_completo }}</strong>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <i class="fas fa-birthday-cake text-muted me-2"></i>
+                            {{ aprendiz.fecha_nacimiento|date:"d/m/Y" }}
+                        </td>
+                        <td>
+                            {% if aprendiz.programa %}
+                                <span class="badge bg-success">
+                                    {{ aprendiz.programa }}
+                                </span>
+                            {% else %}
+                                <span class="badge bg-warning">
+                                    Sin Programa
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge bg-info">
+                                Activo
+                            </span>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a href="{% url 'admin:aprendices_aprendiz_change' aprendiz.pk %}" class="btn btn-sm btn-outline-primary" title="Editar">
+                                <button type="button" class="btn btn-sm btn-outline-warning" title="Editar">
+                                <i class="fas fa-edit"></i>
+                                </button>
+
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {% else %}
-            <div class="no-aprendices">
-                <h3>No hay aprendices registrados</h3>
-                <p>Comienza agregando tu primer aprendiz al sistema</p>
+        <div class="text-center py-5">
+            <div class="empty-state">
+                <i class="fas fa-user-slash fa-3x text-muted mb-3"></i>
+                <h4 class="text-muted">No hay aprendices registrados</h4>
+                <p class="text-muted mb-4">No se han registrado aprendices en el sistema.</p>
+                <a href="{% url 'admin:aprendices_aprendiz_add' %}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Registrar Primer Aprendiz
+                </a>
             </div>
+        </div>
         {% endif %}
     </div>
-
-    <script>
-        function buscarAprendiz() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const cards = document.querySelectorAll('.aprendiz-card');
-            
-            cards.forEach(card => {
-                const name = card.querySelector('.aprendiz-name').textContent.toLowerCase();
-                const programa = card.querySelector('.aprendiz-info:last-child').textContent.toLowerCase();
-                const ciudad = card.querySelector('.aprendiz-info:nth-last-child(2)').textContent.toLowerCase();
-                
-                if (name.includes(searchTerm) || programa.includes(searchTerm) || ciudad.includes(searchTerm)) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-
-        // Buscar mientras se escribe
-        document.getElementById('searchInput').addEventListener('input', buscarAprendiz);
-    </script>
-</body>
-</html>
-    
+</div>
+{% endblock content %}
